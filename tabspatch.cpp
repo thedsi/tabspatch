@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <tchar.h>
 #include <vector>
@@ -38,14 +39,14 @@ int wmain(int argc, wchar_t** argv)
     printf("Tabs Studio Crack 2015-10-23\n");
     if (argc != 2)
     {
-        printf("Syntax: %s <TabsStudio.dll>\n", argv[0]);
+        printf("Syntax: %S <TabsStudio.dll>\n", argv[0]);
         return 1;
     }
 
     FILE *file = _wfopen(argv[1], L"rb");
     if (!file)
     {
-        printf("Unable to open %s\n", argv[1]);
+        printf("Unable to open %S\n", argv[1]);
         return 1;
     }
     fseek(file, 0, SEEK_END);
@@ -57,7 +58,7 @@ int wmain(int argc, wchar_t** argv)
     fclose(file);
     if (!success)
     {
-        printf("Unable to read file %s\n",argv[1]);
+        printf("Unable to read file %S\n",argv[1]);
         return 1;
     }
     
@@ -75,7 +76,7 @@ int wmain(int argc, wchar_t** argv)
         fwrite(buffer.data(), 1, buffer.size(), fbackup);
         fclose(fbackup);
     }
-    printf("Patching (%p)...\n", p - &buffer.front());
+    printf("Patching (%08X)...\n", p - &buffer.front());
     copy(patch, patch + sizeof(patch), p);
     
     FILE* fnew = _wfopen(argv[1], L"wb");
@@ -87,7 +88,7 @@ int wmain(int argc, wchar_t** argv)
     }
     else
     {
-        printf("Cannot open file for writing %s\n", argv[1]);
+        printf("Cannot open file for writing %S\n", argv[1]);
         return 1;
     }
     return 0;
